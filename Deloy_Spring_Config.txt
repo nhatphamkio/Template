@@ -1,0 +1,32 @@
+Deloy Spring Boot App on Heiroku Config
+I think this has to do with a mismatch between your targeted Java runtime environment on Heroku and your locally compiled code, generated from the Maven compiler, which you're trying to push to Heroku.
+
+According to Heroku's documentation:
+
+Heroku currently uses OpenJDK 8 to run your application by default. OpenJDK versions 9 and 7 are also available.
+
+Other supported default versions are:
+Java 7 - 1.7.0_181
+Java 8 - 1.8.0_191
+Java 9 - 9.0.4
+Java 10 - 10.0.2
+Java 11 - 11
+So you should make sure that within your pom.xml file that your maven compiler is compiling your JAVA code to the appropriate JAVA buildpack you're targeting on Heroku. For example, below we are targeting a Java 7 runtime environment:
+
+---> pom.xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.1</version>
+    <configuration>
+        <source>1.7</source>
+        <target>1.7</target>
+    </configuration>
+</plugin>
+
+Then you should create a system.properties file in your project if you're targeting a runtime environment other than Heroku's default JDK 1.8 runtime environment. You can do this by specifying your desired java runtime environment like such:
+---> system.properties
+java.runtime.version=11
+Ensure you're using the appropriate JAVA JDK
+Check that your target environment from the Maven compiler is the same as your targeted Heroku JAVA runtime.
+If you're not using the default JAVA 8 JDK runtime environment create a system.properties file in your project specifying a different supported JAVA runtime enviroment as listed within Heroku's JAVA buildpack documentation.
