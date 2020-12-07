@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, orange, orange 50%, cyan);
+        }
+        body.light{
+            background:linear-gradient(90deg,#ffeb3b,#da00ff); ;
+        }
+        .clock{
+            width:350px;
+            height:350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url(clock.png);
+            background-size: cover;
+            border:4px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 -15px 15px rgba(225,255,255,0.05),
+                        inset 0 -15px 15px rgba(225,255,255,0.05),
+                        0 -15px 15px rgba(0,0,0,0.3),
+                        inset 0 -15px 15px rgba(0,0,0,0.3);
+            }
+        body.light .clock{
+            background:url(clock.png);
+            background-size: cover;
+            border: 4px solid #cad3dc;
+            box-shadow: 0 -10px 10px rgba(225,255,255,0.5),
+                        inset 0 -10px 10px rgba(225,255,255,0.5),
+                        0 -10px 10px rgba(0,0,0,0.3),
+                        inset 0 -10px 10px rgba(0,0,0,0.3);
+        }
+        .clock:before{
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #fff;
+            border-radius: 50%;
+            z-index:100000;
+        }
+        body.light .clock::before{
+            background: #008eff;
+        }
+        .clock:after{
+            content: 'Kawaii chan';
+            position: absolute;
+            top:10px;
+            left: 15px;
+            font-size: 1em;
+            color:#eaeaea;
+            text-shadow: 6px 6px 12px rgba(0,0,.08),
+                         -6px -6px 12px rgba(225,225,225,1);
+
+
+        }
+        .clock .hour{
+            position: absolute;
+        }     
+        .clock .min,
+        .clock .sec{
+            position: absolute;
+        }
+        .clock .hour, .hr{
+            width: 160px;
+            height: 160px;
+        }
+        .clock .min, .mn{
+            width: 190px;
+            height: 190px;
+
+        }
+        .clock .sec, .sc{
+            width: 230px;
+            height: 230px;
+
+        }
+        .hr,.mn,.sc{
+            display: flex;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .hr:before{
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 80px;
+            background: #ff105e;
+            z-index: 10;
+            border-radius: 6px 6px 0 0;
+        }
+        .mn:before{
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 90px;
+            background: #fff;
+            z-index: 11;
+            border-radius: 6px 6px 0 0;
+        }
+        body.light .mn::before{
+            background: #091921;
+        }
+        .sc:before{
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 150px;
+            background: #fff;
+            z-index: 12;
+            border-radius: 6px 6px 0 0;
+        }
+        .toggleClass{
+            position: absolute;
+            top: 30px;
+            right: 150px;
+            width:20px;
+            height:20px;
+            font-size: 18px;
+            border-radius: 50%;
+            background: linear-gradient(90deg,#f00,#0ff);
+            font-family: consolas;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .toggleClass:before{
+            position: absolute;
+            left: 25px;
+            content: 'Kiiro Suki';
+            color: #ffeb3b;
+            white-space: nowrap;
+        }
+        body.light .toggleClass{
+            background:linear-gradient(90deg,#da00ff,#ffeb3b);
+            color: #091921;
+        }
+        body.light .toggleClass::before{
+            content: 'Pink Suki';
+
+        }
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="hour">
+            <div class="hr" id="hr"></div>
+        </div>
+        <div class="min">
+            <div class="mn" id="mn"></div>
+        </div>
+        <div class="sec">
+            <div class="sc" id="sc"></div>
+        </div>
+    </div>
+    <div class="toggleClass" onclick="toggleClass()"></div>
+
+
+
+    <script type="text/javascript">
+        function toggleClass(){
+            const body = document.querySelector('body');
+            body.classList.toggle('light');
+        };
+
+        const deg = 6;
+        const hr = document.querySelector('#hr');
+        const mn = document.querySelector('#mn');
+        const sc = document.querySelector('#sc');
+        setInterval(()=>{
+            let day = new Date();
+            let hh = day.getHours()*30;
+            let mm = day.getMinutes()*deg;
+            let ss = day.getSeconds()*deg;
+            hr.style.transform = `rotateZ(${(hh)+(mm/12)}deg`;
+            mn.style.transform = `rotateZ(${mm}deg`;
+            sc.style.transform = `rotateZ(${ss}deg`;
+        })        
+
+    </script>
+    
+</body>
+</html>
