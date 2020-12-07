@@ -1,4 +1,5 @@
 Deloy Spring Boot App on Heiroku Config
+-webkit-box-reflect:below 1px linear-gradient(transparent 70%,rgba(75, 66, 66, 0.6));
 I think this has to do with a mismatch between your targeted Java runtime environment on Heroku and your locally compiled code, generated from the Maven compiler, which you're trying to push to Heroku.
 
 According to Heroku's documentation:
